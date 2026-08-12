@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão Híbrida de Projetos Integrada — E-book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1A2B;
+    --ink-2:#16283F;
+    --ink-3:#1E3350;
+    --paper:#E8E9E2;
+    --paper-2:#FFFFFF;
+    --text-dark:#111A24;
+    --text-soft:#5B6472;
+    --text-light:#C9D1DC;
+    --text-light-soft:#8FA0B3;
+
+    --pmi:#4C7EA8;
+    --scrum:#D9694F;
+    --lean:#C9A227;
+    --pdca:#4C8B6D;
+    --ia:#63D9D4;
+
+    --serif:'Fraunces', serif;
+    --sans:'Inter', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--text-dark);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px;height:7px;border-radius:50%;
+    background:var(--ia);
+    box-shadow:0 0 8px var(--ia);
+  }
+
+  h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-0.01em;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--sans);font-weight:600;font-size:15px;
+    padding:15px 26px;border-radius:3px;
+    border:1px solid transparent;
+    cursor:pointer;transition:transform .18s ease, background .18s ease, border-color .18s ease;
+    text-decoration:none;
+  }
+  .btn-primary{background:var(--ia);color:var(--ink);}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{border-color:rgba(255,255,255,0.28);color:var(--text-light);}
+  .btn-ghost:hover{border-color:var(--ia);color:var(--ia);}
+  .btn-ghost-dark{border-color:rgba(17,26,36,0.25);color:var(--text-dark);}
+  .btn-ghost-dark:hover{border-color:var(--text-dark);}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(14,26,43,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .brand{font-family:var(--serif);font-size:19px;color:var(--text-light);letter-spacing:0.01em;}
+  .brand em{font-style:normal;color:var(--ia);}
+  .navlinks{display:flex;gap:30px;font-size:14px;color:var(--text-light-soft);}
+  .navlinks a{text-decoration:none;transition:color .15s;}
+  .navlinks a:hover{color:var(--ia);}
+  .nav-cta{display:none;}
+  @media(min-width:760px){.nav-cta{display:inline-flex;}}
+  @media(max-width:759px){.navlinks{display:none;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:radial-gradient(120% 90% at 82% 8%, #1B3552 0%, var(--ink) 55%);
+    color:var(--text-light);
+    padding:88px 0 100px;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;
+  }
+  .hero .eyebrow{color:var(--ia);margin-bottom:22px;}
+  .hero h1{
+    font-size:clamp(38px,5vw,60px);
+    line-height:1.04;
+    color:#F4F5F1;
+    max-width:11.5ch;
+  }
+  .hero p.lead{
+    margin-top:22px;
+    font-size:18px;
+    color:var(--text-light-soft);
+    max-width:46ch;
+  }
+  .hero .cta-row{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .hero .byline{
+    margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.12);
+    font-size:13.5px;color:var(--text-light-soft);
+    display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;
+  }
+  .hero .byline strong{color:var(--text-light);font-weight:600;}
+
+  /* wheel */
+  .wheel-stage{display:flex;flex-direction:column;align-items:center;gap:26px;}
+  .wheel-holder{position:relative;width:320px;height:320px;}
+  .wheel{
+    width:320px;height:320px;border-radius:50%;
+    background:conic-gradient(
+      var(--pmi) 0deg 90deg,
+      var(--scrum) 90deg 180deg,
+      var(--pdca) 180deg 270deg,
+      var(--lean) 270deg 360deg
+    );
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.6);
+    animation:spin-in 1.4s cubic-bezier(.16,.9,.28,1) both;
+    transition:filter .3s ease;
+  }
+  @keyframes spin-in{from{transform:rotate(-38deg) scale(.85);opacity:0;}to{transform:rotate(0) scale(1);opacity:1;}}
+  .wheel-core{
+    position:absolute;inset:64px;border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #22405F, var(--ink) 70%);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.06), inset 0 0 30px rgba(99,217,212,0.25);
+  }
+  .wheel-core span.ia-label{
+    font-family:var(--mono);font-size:22px;letter-spacing:0.08em;color:var(--ia);
+    text-shadow:0 0 18px rgba(99,217,212,0.75);
+  }
+  .wheel-core span.ia-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;color:var(--text-light-soft);margin-top:4px;}
+  .wheel-tag{
+    position:absolute;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;
+    color:#0E1A2B;background:rgba(255,255,255,0.92);padding:4px 9px;border-radius:2px;
+    font-weight:500;
+  }
+  .tag-pmi{top:14px;left:50%;transform:translate(-50%,0);}
+  .tag-scrum{top:50%;right:-6px;transform:translate(0,-50%);}
+  .tag-pdca{bottom:14px;left:50%;transform:translate(-50%,0);}
+  .tag-lean{top:50%;left:-6px;transform:translate(0,-50%);}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:center;max-width:340px;}
+  .legend button{
+    all:unset;cursor:pointer;
+    display:flex;align-items:center;gap:7px;
+    font-family:var(--mono);font-size:11.5px;color:var(--text-light-soft);
+    transition:color .15s;
+  }
+  .legend button:hover, .legend button.active{color:var(--text-light);}
+  .legend .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+
+  /* ---------- PROBLEM SECTION ---------- */
+  .problems{background:var(--paper);padding:100px 0;}
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head .eyebrow{color:#8A6A00;margin-bottom:16px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px);color:var(--text-dark);line-height:1.12;}
+  .section-head p{margin-top:16px;font-size:16.5px;color:var(--text-soft);max-width:56ch;}
+
+  .problem-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:rgba(17,26,36,0.12);
+    border:1px solid rgba(17,26,36,0.12);
+  }
+  .problem-cell{background:var(--paper-2);padding:26px 24px;min-height:120px;}
+  .problem-cell p{font-size:14.5px;color:var(--text-dark);font-weight:500;line-height:1.4;}
+  @media(max-width:860px){.problem-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.problem-grid{grid-template-columns:1fr;}}
+
+  /* ---------- PILLARS ---------- */
+  .pillars{background:var(--ink);padding:110px 0;color:var(--text-light);}
+  .pillars .section-head .eyebrow{color:var(--ia);}
+  .pillars .section-head h2{color:#F4F5F1;}
+  .pillars .section-head p{color:var(--text-light-soft);}
+
+  .pillar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.09);}
+  .pillar{background:var(--ink-2);padding:30px 24px 34px;position:relative;overflow:hidden;}
+  .pillar::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--bar,var(--ia));}
+  .pillar h3{font-family:var(--sans);font-weight:700;font-size:15.5px;color:#F4F5F1;margin-bottom:10px;letter-spacing:0.01em;}
+  .pillar p{font-size:13.5px;color:var(--text-light-soft);line-height:1.5;}
+  @media(max-width:900px){.pillar-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.pillar-grid{grid-template-columns:1fr;}}
+
+  /* ---------- AI PROMPT SECTION ---------- */
+  .ia-section{background:var(--paper);padding:110px 0;}
+  .ia-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:start;}
+  @media(max-width:900px){.ia-grid{grid-template-columns:1fr;}}
+  .ia-copy .stat-row{display:flex;gap:36px;margin-top:36px;flex-wrap:wrap;}
+  .stat{border-left:2px solid var(--ia);padding-left:14px;}
+  .stat .num{font-family:var(--serif);font-size:34px;color:var(--text-dark);line-height:1;}
+  .stat .cap{font-size:12.5px;color:var(--text-soft);margin-top:6px;max-width:18ch;}
+
+  .terminal{
+    background:var(--ink);border-radius:8px;overflow:hidden;
+    box-shadow:0 30px 60px -25px rgba(0,0,0,0.45);
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:8px;padding:13px 16px;
+    background:var(--ink-2);border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .terminal-bar .dot{width:9px;height:9px;border-radius:50%;}
+  .terminal-bar .fname{margin-left:8px;font-family:var(--mono);font-size:12px;color:var(--text-light-soft);}
+  .terminal-body{padding:22px 24px 26px;font-family:var(--mono);font-size:12.6px;line-height:1.75;color:var(--text-light);}
+  .terminal-body .k{color:var(--ia);}
+  .terminal-body .c{color:var(--text-light-soft);}
+  .terminal-body p{margin-bottom:12px;}
+
+  /* ---------- CHAPTERS / TOC ---------- */
+  .toc{background:var(--paper-2);padding:110px 0;border-top:1px solid rgba(17,26,36,0.08);border-bottom:1px solid rgba(17,26,36,0.08);}
+  .toc-list{list-style:none;border-top:1px solid rgba(17,26,36,0.12);}
+  .toc-list li{
+    display:grid;grid-template-columns:64px 1fr auto;gap:18px;align-items:baseline;
+    padding:18px 4px;border-bottom:1px solid rgba(17,26,36,0.12);
+  }
+  .toc-list .n{font-family:var(--mono);font-size:12.5px;color:var(--text-soft);}
+  .toc-list .t{font-family:var(--serif);font-size:18px;color:var(--text-dark);}
+  .toc-list .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:0.05em;color:#fff;padding:3px 8px;border-radius:2px;white-space:nowrap;height:fit-content;}
+  @media(max-width:640px){
+    .toc-list li{grid-template-columns:36px 1fr;}
+    .toc-list .tag{grid-column:2;justify-self:start;}
+  }
+
+  /* ---------- AUTHOR ---------- */
+  .author{background:var(--ink);color:var(--text-light);padding:110px 0;}
+  .author .wrap{display:grid;grid-template-columns:180px 1fr;gap:44px;align-items:start;}
+  @media(max-width:640px){.author .wrap{grid-template-columns:1fr;}}
+  .avatar{
+    width:150px;height:150px;border-radius:50%;
+    background:conic-gradient(var(--pmi),var(--scrum),var(--pdca),var(--lean),var(--pmi));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .avatar span{
+    width:132px;height:132px;border-radius:50%;background:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:34px;color:#F4F5F1;
+  }
+  .author h2{color:#F4F5F1;font-size:clamp(24px,3vw,32px);margin-bottom:6px;}
+  .author .role{font-family:var(--mono);font-size:12.5px;color:var(--ia);letter-spacing:0.05em;margin-bottom:20px;}
+  .author p{color:var(--text-light-soft);font-size:15.5px;max-width:66ch;margin-bottom:14px;}
+  .author .companies{margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--text-light-soft);letter-spacing:0.04em;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    background:radial-gradient(120% 140% at 20% 0%, #1B3552 0%, var(--ink) 60%);
+    color:var(--text-light);padding:120px 0;text-align:center;
+  }
+  .final-cta h2{font-size:clamp(30px,4.5vw,46px);color:#F4F5F1;max-width:16ch;margin:0 auto 18px;line-height:1.1;}
+  .final-cta p{color:var(--text-light-soft);max-width:50ch;margin:0 auto 36px;font-size:17px;}
+  .final-cta .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+  footer{background:var(--ink);border-top:1px solid rgba(255,255,255,0.08);padding:34px 0;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer p{font-family:var(--mono);font-size:11.5px;color:var(--text-light-soft);}
+
+  @media (prefers-reduced-motion: reduce){
+    .wheel{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Gestão Híbrida<em>.</em></div>
+    <div class="navlinks">
+      <a href="#problema">O problema</a>
+      <a href="#metodologia">Metodologia</a>
+      <a href="#ia">IA aplicada</a>
+      <a href="#sumario">Sumário</a>
+      <a href="#autor">Autor</a>
+    </div>
+    <a href="#cta" class="btn btn-primary nav-cta">Quero o e-book</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">E-book · Gestão de Projetos</span>
+      <h1>Gestão Híbrida de Projetos Integrada</h1>
+      <p class="lead">Como combinar PMI, Scrum, Kanban, Lean Design e PDCA — com a Inteligência Artificial como camada transversal — para transformar entregas em vantagem competitiva real.</p>
+      <div class="cta-row">
+        <a href="#cta" class="btn btn-primary">Quero o e-book</a>
+        <a href="#sumario" class="btn btn-ghost">Ver sumário completo</a>
+      </div>
+      <div class="byline">
+        <strong>Carlos Newman</strong>
+        <span>· Delivery Manager Sênior · Scrum Master PSM I · MBA FGV/RJ · 30 anos em Tecnologia</span>
+      </div>
+    </div>
+
+    <div class="wheel-stage">
+      <div class="wheel-holder">
+        <div class="wheel" id="wheel">
+          <div class="wheel-tag tag-pmi">PMI</div>
+          <div class="wheel-tag tag-scrum">Scrum</div>
+          <div class="wheel-tag tag-pdca">PDCA</div>
+          <div class="wheel-tag tag-lean">Lean Design</div>
+          <div class="wheel-core">
+            <span class="ia-label">IA</span>
+            <span class="ia-sub">camada transversal</span>
+          </div>
+        </div>
+      </div>
+      <div class="legend" id="legend">
+        <button data-c="pmi"><span class="dot" style="background:var(--pmi)"></span>Governança (PMI)</button>
+        <button data-c="scrum"><span class="dot" style="background:var(--scrum)"></span>Entrega (Scrum)</button>
+        <button data-c="pdca"><span class="dot" style="background:var(--pdca)"></span>Melhoria (PDCA)</button>
+        <button data-c="lean"><span class="dot" style="background:var(--lean)"></span>Descoberta (Lean Design)</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="problems" id="problema">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">O problema</span>
+      <h2>Ferramentas sobram. Resultado consistente, não.</h2>
+      <p>Mesmo com metodologias, frameworks e IAs disponíveis, os mesmos sintomas se repetem projeto após projeto — porque a maioria das organizações escolhe uma única abordagem, em vez de orquestrar as melhores partes de cada uma.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-cell"><p>Escopo mal definido e mudanças constantes sem governança</p></div>
+      <div class="problem-cell"><p>Falta de clareza sobre o problema real antes de partir para a solução</p></div>
+      <div class="problem-cell"><p>Baixa integração entre negócio e tecnologia</p></div>
+      <div class="problem-cell"><p>Retrabalho, atrasos e dificuldade de medir valor entregue</p></div>
+      <div class="problem-cell"><p>Falta de priorização orientada por dados</p></div>
+      <div class="problem-cell"><p>Problemas após o go-live e operação despreparada para sustentação</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pillars" id="metodologia">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">A proposta</span>
+      <h2>Oito abordagens, uma única orquestração</h2>
+      <p>O objetivo não é escolher um framework vencedor, mas aplicar o artefato certo na fase certa — com a IA potencializando cada camada, do kick-off à sustentação.</p>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar" style="--bar:var(--pmi)"><h3>PMI</h3><p>Governança, riscos, comunicação e controle formal — kick-off, status report e Project Charter.</p></div>
+      <div class="pillar" style="--bar:var(--scrum)"><h3>Scrum</h3><p>Ciclos curtos, colaboração e entregas incrementais validadas em sprints de 2 a 4 semanas.</p></div>
+      <div class="pillar" style="--bar:var(--lean)"><h3>Kanban</h3><p>Gestão visual do fluxo, limites de WIP e previsibilidade sem burocracia adicional.</p></div>
+      <div class="pillar" style="--bar:var(--pdca)"><h3>Lean Design</h3><p>Discovery orientado ao problema real, antes de qualquer linha de código.</p></div>
+      <div class="pillar" style="--bar:var(--pmi)"><h3>Lean</h3><p>Filosofia de geração de valor com eliminação rigorosa de desperdício.</p></div>
+      <div class="pillar" style="--bar:var(--scrum)"><h3>PDCA</h3><p>Ciclo de melhoria contínua com análise de causa raiz — Ishikawa, Pareto, 5 Porquês.</p></div>
+      <div class="pillar" style="--bar:var(--lean)"><h3>GMUD</h3><p>Gestão de mudanças, go-live, operação assistida e sustentação segura.</p></div>
+      <div class="pillar" style="--bar:var(--ia)"><h3>Inteligência Artificial</h3><p>Camada transversal: velocidade, análise preditiva e escala aplicadas a cada framework.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="ia-section" id="ia">
+  <div class="wrap">
+    <div class="ia-grid">
+      <div class="ia-copy">
+        <span class="eyebrow" style="color:#8A6A00;">IA aplicada</span>
+        <h2 style="font-size:clamp(26px,3.2vw,36px);margin-top:16px;line-height:1.14;">Prompts prontos para cada fase do projeto</h2>
+        <p style="margin-top:16px;color:var(--text-soft);font-size:16px;max-width:48ch;">Uma biblioteca prática, testada em ChatGPT, Claude, Gemini, DeepSeek e Perplexity — para gerar backlog, Project Charter, matriz de riscos e diagnóstico estratégico em minutos.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="num">21→49%</div><div class="cap">adoção de IA avançada em projetos até o fim de 2026 (PMI)</div></div>
+          <div class="stat"><div class="num">~3h</div><div class="cap">economizadas por semana em tarefas operacionais</div></div>
+          <div class="stat"><div class="num">5</div><div class="cap">elementos de um prompt eficaz, aplicados passo a passo</div></div>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="dot" style="background:#E5564B"></span>
+          <span class="dot" style="background:#E5B84B"></span>
+          <span class="dot" style="background:#4BC97A"></span>
+          <span class="fname">prompt · geração-de-backlog.txt</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="k">Papel:</span> <span class="c">Product Owner experiente em projetos de integração de sistemas.</span></p>
+          <p><span class="k">Contexto:</span> <span class="c">Squad multidisciplinar de 8 pessoas, prazo de 6 meses, orçamento fixo, Sprint 0 dedicada à arquitetura.</span></p>
+          <p><span class="k">Tarefa:</span> <span class="c">Gerar backlog em épicos e histórias, priorizado em MoSCoW, com critérios de aceite, complexidade e sprint sugerida.</span></p>
+          <p><span class="k">Formato:</span> <span class="c">Tabela por épico + resumo do que entra no MVP.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="toc" id="sumario">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="color:#8A6A00;">Sumário</span>
+      <h2>Do kick-off à sustentação, capítulo a capítulo</h2>
+      <p>Uma trilha completa — da teoria à prática de campo, com cases reais de redução de escopo, eliminação de gargalos e checklists de go-live.</p>
+    </div>
+    <ul class="toc-list">
+      <li><span class="n">01</span><span class="t">Introdução</span><span class="tag" style="background:var(--pmi)">Contexto</span></li>
+      <li><span class="n">02</span><span class="t">O que é Gerenciamento de Projetos</span><span class="tag" style="background:var(--pmi)">Fundamentos</span></li>
+      <li><span class="n">03</span><span class="t">IA — Prompts para Gestão e Execução de Projetos</span><span class="tag" style="background:var(--ia);color:#0E1A2B;">IA</span></li>
+      <li><span class="n">04</span><span class="t">A "Nova" Realidade dos Projetos Digitais</span><span class="tag" style="background:var(--pmi)">Contexto</span></li>
+      <li><span class="n">05</span><span class="t">A Gestão Híbrida como Diferencial Competitivo</span><span class="tag" style="background:var(--pmi)">Estratégia</span></li>
+      <li><span class="n">06</span><span class="t">Erros Comuns: Começar pela Solução Antes do Problema</span><span class="tag" style="background:var(--lean)">Lean</span></li>
+      <li><span class="n">07</span><span class="t">Proposta de Metodologia: Fases e Entregáveis</span><span class="tag" style="background:var(--pmi)">Governança</span></li>
+      <li><span class="n">08</span><span class="t">Gestão, Agilidade, Governança e Controle</span><span class="tag" style="background:var(--pmi)">Governança</span></li>
+      <li><span class="n">09</span><span class="t">Scrum: Entregas Incrementais e Ritos Ágeis</span><span class="tag" style="background:var(--scrum)">Scrum</span></li>
+      <li><span class="n">10</span><span class="t">Kanban: Gestão Visual, Fluxo e Previsibilidade</span><span class="tag" style="background:var(--lean)">Kanban</span></li>
+      <li><span class="n">11</span><span class="t">Lean Design: Começando pelo Problema Certo</span><span class="tag" style="background:var(--lean)">Lean</span></li>
+      <li><span class="n">12</span><span class="t">PDCA na Prática: Melhoria Contínua</span><span class="tag" style="background:var(--pdca)">PDCA</span></li>
+      <li><span class="n">13</span><span class="t">Go-live, GMUD, Operação Assistida e Sustentação</span><span class="tag" style="background:var(--pmi)">Transição</span></li>
+      <li><span class="n">14</span><span class="t">Conclusão e Resumo da Metodologia Híbrida</span><span class="tag" style="background:var(--pdca)">Síntese</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="author" id="autor">
+  <div class="wrap">
+    <div class="avatar"><span>CN</span></div>
+    <div>
+      <span class="eyebrow" style="color:var(--ia);">Sobre o autor</span>
+      <h2 style="margin-top:14px;">Carlos Newman</h2>
+      <div class="role">Delivery Manager · Gerente de Projetos Sênior · Scrum Master PSM I</div>
+      <p>Mais de 30 anos de vivência em Tecnologia e 24 anos dedicados à gestão de projetos, liderando iniciativas de alta complexidade, programas e implementação de PMOs.</p>
+      <p>Especialista na orquestração de práticas híbridas — tradicionais e ágeis — este e-book nasce da experiência prática no dia a dia de projetos corporativos, onde uma metodologia isolada raramente é suficiente.</p>
+      <div class="companies">Vivências aplicadas em: Rede Energia · Ambev · AB InBev · Cleartech · Stefanini · PerformaIT</div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="cta">
+  <div class="wrap">
+    <h2>Leve a metodologia híbrida para o seu próximo projeto</h2>
+    <p>Frameworks, templates, checklists e uma biblioteca de prompts de IA prontos para aplicar — do kick-off à sustentação.</p>
+    <div class="cta-row">
+      <a href="#" class="btn btn-primary">Quero o e-book agora</a>
+      <a href="#sumario" class="btn btn-ghost">Rever o sumário</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Carlos Newman — Todos os direitos reservados.</p>
+    <p>Gestão Híbrida de Projetos Integrada</p>
+  </div>
+</footer>
+
+<script>
+  const legend = document.getElementById('legend');
+  const wheel = document.getElementById('wheel');
+  const colorMap = {pmi:'var(--pmi)',scrum:'var(--scrum)',pdca:'var(--pdca)',lean:'var(--lean)'};
+
+  legend.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const isActive = btn.classList.contains('active');
+    legend.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    if(isActive){
+      wheel.style.filter = 'none';
+    } else {
+      btn.classList.add('active');
+      wheel.style.filter = 'saturate(0.35) brightness(0.75)';
+      const key = btn.dataset.c;
+      const tagMap = {pmi:'.tag-pmi',scrum:'.tag-scrum',pdca:'.tag-pdca',lean:'.tag-lean'};
+      document.querySelectorAll('.wheel-tag').forEach(t => t.style.opacity = 0.55);
+      const active = wheel.querySelector(tagMap[key]);
+      if(active) active.style.opacity = 1;
+    }
+  });
+</script>
+
+</body>
+</html>
