@@ -23,14 +23,18 @@ gtag('consent', 'default', {
 });
 </script>
 
-<!-- ========================= GA4 ========================= -->
+<!-- ========================= GA4 =========================
+     TODO: substituir GA_MEASUREMENT_ID pelo ID real (ex: G-XXXXXXX)
+     antes de publicar, ou nenhum evento será registrado. -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
 <script>
 gtag('js', new Date());
 gtag('config', 'GA_MEASUREMENT_ID');
 </script>
 
-<!-- ========================= META PIXEL ========================= -->
+<!-- ========================= META PIXEL =========================
+     TODO: substituir SEU_PIXEL_ID pelo ID real do Pixel
+     antes de publicar, ou nenhum evento será registrado. -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -41,7 +45,6 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 
-/* Pixel só dispara após consentimento (ver banner) */
 window.__fbPixelId = 'SEU_PIXEL_ID';
 </script>
 
@@ -62,6 +65,9 @@ window.__fbPixelId = 'SEU_PIXEL_ID';
   --lean:#C9A227;
   --pdca:#4C8B6D;
   --ia:#63D9D4;
+  --kanban:#8B6FB3;
+  --lean-phil:#8C9C3F;
+  --gmud:#B3654F;
 
   --serif:'Fraunces', serif;
   --sans:'Inter', sans-serif;
@@ -177,6 +183,14 @@ h1,h2,h3{
   border-color:var(--text-dark);
 }
 
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible{
+  outline:2px solid var(--ia);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
 /* ---------- NAV ---------- */
 
 nav{
@@ -236,6 +250,88 @@ nav .wrap{
 @media(max-width:759px){
   .navlinks{
     display:none;
+  }
+}
+
+/* menu mobile (hambúrguer) */
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  width:40px;
+  height:40px;
+  padding:8px;
+  position:relative;
+}
+
+.menu-toggle span{
+  display:block;
+  position:absolute;
+  left:8px;
+  right:8px;
+  height:2px;
+  background:var(--text-light);
+  transition:transform .25s ease, opacity .2s ease;
+}
+
+.menu-toggle span:nth-child(1){ top:12px; }
+.menu-toggle span:nth-child(2){ top:19px; }
+.menu-toggle span:nth-child(3){ top:26px; }
+
+.menu-toggle.is-open span:nth-child(1){
+  transform:translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.is-open span:nth-child(2){
+  opacity:0;
+}
+
+.menu-toggle.is-open span:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg);
+}
+
+@media(max-width:759px){
+  .menu-toggle{
+    display:block;
+  }
+}
+
+.mobile-menu{
+  display:none;
+  flex-direction:column;
+  gap:2px;
+  background:var(--ink-2);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 32px 20px;
+}
+
+.mobile-menu.is-open{
+  display:flex;
+}
+
+.mobile-menu a{
+  padding:14px 4px;
+  font-size:15px;
+  color:var(--text-light-soft);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible{
+  color:var(--ia);
+}
+
+.mobile-menu .btn{
+  margin-top:14px;
+  justify-content:center;
+}
+
+@media(min-width:760px){
+  .mobile-menu{
+    display:none !important;
   }
 }
 
@@ -311,11 +407,15 @@ nav .wrap{
   position:relative;
   width:320px;
   height:320px;
+  max-width:80vw;
+  max-height:80vw;
 }
 
 .wheel{
   width:320px;
   height:320px;
+  max-width:80vw;
+  max-height:80vw;
   border-radius:50%;
   background:conic-gradient(
     var(--pmi) 0deg 90deg,
@@ -428,6 +528,12 @@ nav .wrap{
 .legend button:hover,
 .legend button.active{
   color:var(--text-light);
+}
+
+.legend button:focus-visible{
+  outline:2px solid var(--ia);
+  outline-offset:3px;
+  border-radius:2px;
 }
 
 .legend .dot{
@@ -857,6 +963,15 @@ footer p{
   color:var(--text-light-soft);
 }
 
+footer a{
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+
+footer a:hover{
+  color:var(--ia);
+}
+
 @media (prefers-reduced-motion: reduce){
   .wheel{
     animation:none;
@@ -866,8 +981,6 @@ footer p{
     scroll-behavior:auto;
   }
 }
-
-/* ---------- COOKIE BANNER (LGPD) ---------- */
 
 .cookie-banner{
   position:fixed;
@@ -902,6 +1015,12 @@ footer p{
   margin:0;
 }
 
+.cookie-banner a{
+  color:var(--ia);
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+
 .cookie-banner .cookie-actions{
   display:flex;
   gap:10px;
@@ -916,8 +1035,6 @@ footer p{
 </head>
 
 <body>
-
-<!-- ========================= NAV ========================= -->
 
 <nav>
   <div class="wrap">
@@ -934,7 +1051,6 @@ footer p{
       <a href="#autor">Autor</a>
     </div>
 
-    <!-- BOTÃO GRENN - NAV -->
     <a
       href="https://payfast.greenn.com.br/wqgk4av?utm_source=lp&utm_medium=nav&utm_campaign=ebook_gestao_hibrida&utm_content=nav_cta"
       class="btn btn-primary nav-cta"
@@ -945,11 +1061,39 @@ footer p{
       Quero o e-book
     </a>
 
+    <button
+      class="menu-toggle"
+      type="button"
+      id="menuToggle"
+      aria-expanded="false"
+      aria-controls="mobileMenu"
+      aria-label="Abrir menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#problema">O problema</a>
+    <a href="#metodologia">Metodologia</a>
+    <a href="#ia">IA aplicada</a>
+    <a href="#sumario">Sumário</a>
+    <a href="#autor">Autor</a>
+    <a
+      href="https://payfast.greenn.com.br/wqgk4av?utm_source=lp&utm_medium=nav_mobile&utm_campaign=ebook_gestao_hibrida&utm_content=nav_mobile_cta"
+      class="btn btn-primary"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-cta="nav_mobile"
+    >
+      Quero o e-book
+    </a>
   </div>
 </nav>
 
-
-<!-- ========================= HERO ========================= -->
 
 <header class="hero">
 
@@ -973,7 +1117,6 @@ footer p{
 
       <div class="cta-row">
 
-        <!-- BOTÃO GRENN - HERO -->
         <a
           href="https://payfast.greenn.com.br/wqgk4av?utm_source=lp&utm_medium=hero&utm_campaign=ebook_gestao_hibrida&utm_content=hero_cta"
           class="btn btn-primary"
@@ -1084,8 +1227,6 @@ footer p{
 </header>
 
 
-<!-- ========================= PROBLEMA ========================= -->
-
 <section class="problems" id="problema">
 
   <div class="wrap">
@@ -1155,8 +1296,6 @@ footer p{
 </section>
 
 
-<!-- ========================= METODOLOGIA ========================= -->
-
 <section class="pillars" id="metodologia">
 
   <div class="wrap">
@@ -1199,7 +1338,7 @@ footer p{
         </p>
       </div>
 
-      <div class="pillar" style="--bar:var(--lean)">
+      <div class="pillar" style="--bar:var(--kanban)">
         <h3>Kanban</h3>
         <p>
           Gestão visual do fluxo, limites de WIP e previsibilidade
@@ -1207,7 +1346,7 @@ footer p{
         </p>
       </div>
 
-      <div class="pillar" style="--bar:var(--pdca)">
+      <div class="pillar" style="--bar:var(--lean)">
         <h3>Lean Design</h3>
         <p>
           Discovery orientado ao problema real,
@@ -1215,7 +1354,7 @@ footer p{
         </p>
       </div>
 
-      <div class="pillar" style="--bar:var(--pmi)">
+      <div class="pillar" style="--bar:var(--lean-phil)">
         <h3>Lean</h3>
         <p>
           Filosofia de geração de valor com eliminação
@@ -1223,7 +1362,7 @@ footer p{
         </p>
       </div>
 
-      <div class="pillar" style="--bar:var(--scrum)">
+      <div class="pillar" style="--bar:var(--pdca)">
         <h3>PDCA</h3>
         <p>
           Ciclo de melhoria contínua com análise de causa raiz —
@@ -1231,7 +1370,7 @@ footer p{
         </p>
       </div>
 
-      <div class="pillar" style="--bar:var(--lean)">
+      <div class="pillar" style="--bar:var(--gmud)">
         <h3>GMUD</h3>
         <p>
           Gestão de mudanças, go-live, operação assistida
@@ -1253,8 +1392,6 @@ footer p{
 
 </section>
 
-
-<!-- ========================= IA ========================= -->
 
 <section class="ia-section" id="ia">
 
@@ -1395,8 +1532,6 @@ footer p{
 </section>
 
 
-<!-- ========================= SUMÁRIO ========================= -->
-
 <section class="toc" id="sumario">
 
   <div class="wrap">
@@ -1516,7 +1651,7 @@ footer p{
         <span class="t">
           Kanban: Gestão Visual, Fluxo e Previsibilidade
         </span>
-        <span class="tag" style="background:var(--lean)">
+        <span class="tag" style="background:var(--kanban)">
           Kanban
         </span>
       </li>
@@ -1546,7 +1681,7 @@ footer p{
         <span class="t">
           Go-live, GMUD, Operação Assistida e Sustentação
         </span>
-        <span class="tag" style="background:var(--pmi)">
+        <span class="tag" style="background:var(--gmud)">
           Transição
         </span>
       </li>
@@ -1567,8 +1702,6 @@ footer p{
 
 </section>
 
-
-<!-- ========================= AUTOR ========================= -->
 
 <section class="author" id="autor">
 
@@ -1619,8 +1752,6 @@ footer p{
 </section>
 
 
-<!-- ========================= CTA FINAL ========================= -->
-
 <section class="final-cta" id="cta">
 
   <div class="wrap">
@@ -1637,7 +1768,6 @@ footer p{
 
     <div class="cta-row">
 
-      <!-- BOTÃO GRENN - FINAL CTA -->
       <a
         href="https://payfast.greenn.com.br/wqgk4av?utm_source=lp&utm_medium=final_cta&utm_campaign=ebook_gestao_hibrida&utm_content=final_cta"
         class="btn btn-primary"
@@ -1662,8 +1792,6 @@ footer p{
 </section>
 
 
-<!-- ========================= FOOTER ========================= -->
-
 <footer>
 
   <div class="wrap">
@@ -1673,15 +1801,13 @@ footer p{
     </p>
 
     <p>
-      Gestão Híbrida de Projetos Integrada
+      Gestão Híbrida de Projetos Integrada · <a href="#politica-privacidade" id="footerPrivacyLink">Política de Privacidade</a>
     </p>
 
   </div>
 
 </footer>
 
-
-<!-- ========================= COOKIE BANNER (LGPD) ========================= -->
 
 <div class="cookie-banner" id="cookieBanner">
   <div class="wrap">
@@ -1690,7 +1816,7 @@ footer p{
       Usamos cookies para melhorar sua experiência e medir o desempenho
       das nossas campanhas. Você pode aceitar ou rejeitar o uso de
       cookies de análise e publicidade. Saiba mais em nossa
-      Política de Privacidade.
+      <a href="#politica-privacidade">Política de Privacidade</a>.
     </p>
 
     <div class="cookie-actions">
@@ -1706,11 +1832,9 @@ footer p{
 </div>
 
 
-<!-- ========================= JAVASCRIPT ========================= -->
-
 <script>
 
-/* ---------- Wheel / Legend ---------- */
+/* ---------- Roda interativa (hero) ---------- */
 
 const legend = document.getElementById('legend');
 const wheel = document.getElementById('wheel');
@@ -1767,7 +1891,47 @@ legend.addEventListener('click', (e) => {
 });
 
 
-/* ---------- Cookie Banner / Consent Mode / Meta Pixel ---------- */
+/* ---------- Menu mobile (hambúrguer) ---------- */
+
+(function(){
+
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function openMenu(){
+    mobileMenu.classList.add('is-open');
+    menuToggle.classList.add('is-open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    menuToggle.setAttribute('aria-label', 'Fechar menu');
+  }
+
+  function closeMenu(){
+    mobileMenu.classList.remove('is-open');
+    menuToggle.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Abrir menu');
+  }
+
+  menuToggle.addEventListener('click', function(){
+    const isOpen = mobileMenu.classList.contains('is-open');
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && mobileMenu.classList.contains('is-open')){
+      closeMenu();
+      menuToggle.focus();
+    }
+  });
+
+})();
+
+
+/* ---------- Consentimento de cookies (LGPD) + tracking ---------- */
 
 (function(){
 
@@ -1823,8 +1987,6 @@ legend.addEventListener('click', (e) => {
     denyConsent();
     banner.classList.remove('show');
   });
-
-  /* ---------- Tracking de clique nos CTAs de compra ---------- */
 
   document.querySelectorAll('[data-cta]').forEach(function(link){
     link.addEventListener('click', function(){
