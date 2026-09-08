@@ -9,6 +9,42 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+<!-- ========================= CONSENT MODE (default = negado) ========================= -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'analytics_storage': 'denied',
+  'wait_for_update': 500
+});
+</script>
+
+<!-- ========================= GA4 ========================= -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+gtag('js', new Date());
+gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+
+<!-- ========================= META PIXEL ========================= -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+/* Pixel só dispara após consentimento (ver banner) */
+window.__fbPixelId = 'SEU_PIXEL_ID';
+</script>
+
 <style>
 :root{
   --ink:#0E1A2B;
@@ -86,6 +122,10 @@ section{
   border-radius:50%;
   background:var(--ia);
   box-shadow:0 0 8px var(--ia);
+}
+
+.eyebrow--amber{
+  color:#8A6A00;
 }
 
 h1,h2,h3{
@@ -410,7 +450,6 @@ nav .wrap{
 }
 
 .section-head .eyebrow{
-  color:#8A6A00;
   margin-bottom:16px;
 }
 
@@ -827,6 +866,52 @@ footer p{
     scroll-behavior:auto;
   }
 }
+
+/* ---------- COOKIE BANNER (LGPD) ---------- */
+
+.cookie-banner{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:999;
+  background:var(--ink);
+  color:var(--text-light);
+  border-top:1px solid rgba(255,255,255,0.12);
+  padding:20px 24px;
+  display:none;
+}
+
+.cookie-banner.show{
+  display:block;
+}
+
+.cookie-banner .wrap{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  flex-wrap:wrap;
+  max-width:1160px;
+}
+
+.cookie-banner p{
+  font-size:13.5px;
+  color:var(--text-light-soft);
+  max-width:70ch;
+  margin:0;
+}
+
+.cookie-banner .cookie-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.cookie-banner .btn{
+  padding:10px 18px;
+  font-size:13.5px;
+}
 </style>
 </head>
 
@@ -849,12 +934,13 @@ footer p{
       <a href="#autor">Autor</a>
     </div>
 
-    <!-- BOTÃO GRENN -->
+    <!-- BOTÃO GRENN - NAV -->
     <a
-      href="https://payfast.greenn.com.br/wqgk4av"
+      href="https://payfast.greenn.com.br/wqgk4av?utm_source=lp&utm_medium=nav&utm_campaign=ebook_gestao_hibrida&utm_content=nav_cta"
       class="btn btn-primary nav-cta"
       target="_blank"
       rel="noopener noreferrer"
+      data-cta="nav"
     >
       Quero o e-book
     </a>
@@ -869,7 +955,7 @@ footer p{
 
   <div class="wrap">
 
-    <div class="hero-copy">
+    <div>
 
       <span class="eyebrow">
         E-book · Gestão de Projetos
@@ -887,12 +973,13 @@ footer p{
 
       <div class="cta-row">
 
-        <!-- BOTÃO GRENN -->
+        <!-- BOTÃO GRENN - HERO -->
         <a
-          href="https://payfast.greenn.com.br/wqgk4av"
+          href="https://payfast.greenn.com.br/wqgk4av?utm_source=lp&utm_medium=hero&utm_campaign=ebook_gestao_hibrida&utm_content=hero_cta"
           class="btn btn-primary"
           target="_blank"
           rel="noopener noreferrer"
+          data-cta="hero"
         >
           Quero o e-book
         </a>
@@ -1005,7 +1092,7 @@ footer p{
 
     <div class="section-head">
 
-      <span class="eyebrow">
+      <span class="eyebrow eyebrow--amber">
         O problema
       </span>
 
@@ -1177,10 +1264,7 @@ footer p{
 
       <div class="ia-copy">
 
-        <span
-          class="eyebrow"
-          style="color:#8A6A00;"
-        >
+        <span class="eyebrow eyebrow--amber">
           IA aplicada
         </span>
 
@@ -1319,10 +1403,7 @@ footer p{
 
     <div class="section-head">
 
-      <span
-        class="eyebrow"
-        style="color:#8A6A00;"
-      >
+      <span class="eyebrow eyebrow--amber">
         Sumário
       </span>
 
@@ -1556,16 +1637,13 @@ footer p{
 
     <div class="cta-row">
 
-      <!--
-        CHECKOUT GREENN
-        Este é o botão principal de compra.
-      -->
-
+      <!-- BOTÃO GRENN - FINAL CTA -->
       <a
-        href="https://payfast.greenn.com.br/wqgk4av"
+        href="https://payfast.greenn.com.br/wqgk4av?utm_source=lp&utm_medium=final_cta&utm_campaign=ebook_gestao_hibrida&utm_content=final_cta"
         class="btn btn-primary"
         target="_blank"
         rel="noopener noreferrer"
+        data-cta="final"
       >
         Quero o e-book agora
       </a>
@@ -1603,19 +1681,39 @@ footer p{
 </footer>
 
 
+<!-- ========================= COOKIE BANNER (LGPD) ========================= -->
+
+<div class="cookie-banner" id="cookieBanner">
+  <div class="wrap">
+
+    <p>
+      Usamos cookies para melhorar sua experiência e medir o desempenho
+      das nossas campanhas. Você pode aceitar ou rejeitar o uso de
+      cookies de análise e publicidade. Saiba mais em nossa
+      Política de Privacidade.
+    </p>
+
+    <div class="cookie-actions">
+      <button class="btn btn-ghost" id="cookieReject" type="button">
+        Rejeitar
+      </button>
+      <button class="btn btn-primary" id="cookieAccept" type="button">
+        Aceitar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
 <!-- ========================= JAVASCRIPT ========================= -->
 
 <script>
 
+/* ---------- Wheel / Legend ---------- */
+
 const legend = document.getElementById('legend');
 const wheel = document.getElementById('wheel');
-
-const colorMap = {
-  pmi:'var(--pmi)',
-  scrum:'var(--scrum)',
-  pdca:'var(--pdca)',
-  lean:'var(--lean)'
-};
 
 legend.addEventListener('click', (e) => {
 
@@ -1667,6 +1765,82 @@ legend.addEventListener('click', (e) => {
   }
 
 });
+
+
+/* ---------- Cookie Banner / Consent Mode / Meta Pixel ---------- */
+
+(function(){
+
+  const CONSENT_KEY = 'lgpd_consent_status';
+  const banner = document.getElementById('cookieBanner');
+  const btnAccept = document.getElementById('cookieAccept');
+  const btnReject = document.getElementById('cookieReject');
+
+  function loadMetaPixel(){
+    if(window.fbq && window.__fbPixelId){
+      fbq('init', window.__fbPixelId);
+      fbq('track', 'PageView');
+    }
+  }
+
+  function grantConsent(){
+    gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
+    loadMetaPixel();
+    localStorage.setItem(CONSENT_KEY, 'granted');
+  }
+
+  function denyConsent(){
+    gtag('consent', 'update', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
+    });
+    localStorage.setItem(CONSENT_KEY, 'denied');
+  }
+
+  const stored = localStorage.getItem(CONSENT_KEY);
+
+  if(stored === 'granted'){
+    grantConsent();
+  } else if(stored === 'denied'){
+    denyConsent();
+  } else {
+    banner.classList.add('show');
+  }
+
+  btnAccept.addEventListener('click', function(){
+    grantConsent();
+    banner.classList.remove('show');
+  });
+
+  btnReject.addEventListener('click', function(){
+    denyConsent();
+    banner.classList.remove('show');
+  });
+
+  /* ---------- Tracking de clique nos CTAs de compra ---------- */
+
+  document.querySelectorAll('[data-cta]').forEach(function(link){
+    link.addEventListener('click', function(){
+      if(typeof gtag === 'function'){
+        gtag('event', 'select_content', {
+          content_type: 'cta_compra',
+          item_id: link.dataset.cta
+        });
+      }
+      if(window.fbq){
+        fbq('track', 'InitiateCheckout');
+      }
+    });
+  });
+
+})();
 
 </script>
 
